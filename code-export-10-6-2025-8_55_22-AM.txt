@@ -1,0 +1,97 @@
+// define tables
+Users [icon: user]{
+  ID VARCHAR(45) pk
+  UserName VARCHAR(45)
+  FullName VARCHAR(45)
+  Email VARCHAR(45)
+  Password VARCHAR(45)
+  UserSince DATETIME
+  LastLogin DATETIME
+  Active TINYINT
+  ProfilePicture VARCHAR(45)
+}
+
+UserProfiles [icon: user-check]{
+  UserId VARCHAR(45) pk
+  Description VARCHAR(45)
+  Location VARCHAR(45)
+  Website VARCHAR(45)
+  BirthDate DATETIME
+}
+
+UserSettings [icon: settings]{
+  UserId VARCHAR(45) pk
+  Theme VARCHAR(45)
+  Language VARCHAR(45)
+  Country VARCHAR(45)
+}
+
+UserNotifications [icon: bell]{
+  UserId VARCHAR(45) pk
+  EmailNotifications ENUM('on','off')
+  PushNotifications ENUM('on','off')
+  NotificationMessages ENUM('on','off')
+}
+
+Tweets [icon: twitter]{
+  ID VARCHAR(45) pk
+  Text VARCHAR(45)
+  CreatedAt DATETIME
+  UserId VARCHAR(45)
+  InReplyToTweetId VARCHAR(45)
+  InReplyToUserId VARCHAR(45)
+  RetweetCount INT
+  FavoriteCount INT
+  Language VARCHAR(45)
+  Country VARCHAR(45)
+}
+
+FollowingRelationships [icon: users]{
+  UserId VARCHAR(45)
+  FollowedUserId VARCHAR(45)
+  FollowedAt DATETIME
+}
+
+Favorites [icon: star]{
+  UserId VARCHAR(45)
+  TweetId VARCHAR(45)
+  FavoritedAt DATETIME
+}
+
+PostComments [icon: message-square]{
+  ID VARCHAR(45) pk
+  UserId VARCHAR(45)
+  TweetId VARCHAR(45)
+  Comment VARCHAR(45)
+  CommentSent DATETIME
+}
+
+PostLikes [icon: heart]{
+  UserId VARCHAR(45)
+  TweetId VARCHAR(45)
+  LikeSent DATETIME
+}
+
+PostViews [icon: eye]{
+  UserId VARCHAR(45)
+  TweetId VARCHAR(45)
+  ViewCount INT
+}
+
+// End of tables
+
+// Relationships
+UserProfiles.UserId > Users.ID
+UserSettings.UserId > Users.ID
+UserNotifications.UserId > Users.ID
+Tweets.UserId > Users.ID
+FollowingRelationships.UserId > Users.ID
+FollowingRelationships.FollowedUserId > Users.ID
+Favorites.UserId > Users.ID
+Favorites.TweetId > Tweets.ID
+PostComments.UserId > Users.ID
+PostComments.TweetId > Tweets.ID
+PostLikes.UserId > Users.ID
+PostLikes.TweetId > Tweets.ID
+PostViews.UserId > Users.ID
+PostViews.TweetId > Tweets.ID
